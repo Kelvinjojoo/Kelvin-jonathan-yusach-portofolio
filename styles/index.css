@@ -1,0 +1,365 @@
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #00d4aa;
+  --text-secondary: #ffffff;
+  --accent-1: #ffffff;
+  --accent-2: #4ecdc4;
+  --accent-3: #45b7d1;
+  --pixel-size: 4px;
+  --mascot-glow: drop-shadow(0 0 2px rgba(0,212,170,.55)) drop-shadow(0 0 10px rgba(0,212,170,.35));
+  --mascot-hover-glow: drop-shadow(0 0 15px rgba(0,212,170,.8)) drop-shadow(0 0 20px rgba(0,212,170,.5));
+}
+
+[data-theme="light"] {
+  --bg-primary: #f0f8ff;
+  --bg-secondary: #e6f3ff;
+  --text-primary: #2c3e50;
+  --text-secondary: #34495e;
+  --accent-1: #1a1a1a;
+  --mascot-glow: drop-shadow(0 0 15px rgba(44, 62, 80, .5)) drop-shadow(0 0 25px rgba(52, 73, 94, .3));
+  --mascot-hover-glow: drop-shadow(0 0 15px rgba(44, 62, 80, .8)) drop-shadow(0 0 40px rgba(44, 62, 80, .6));
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "VT323", monospace;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.theme-switch {
+  display: none;
+}
+
+.theme-label {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: 25px;
+  padding: 5px;
+  cursor: pointer;
+  position: relative;
+  width: 60px;
+  height: 30px;
+  transition: all 0.3s ease;
+}
+
+.theme-label::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  transform: translateX(2px);
+}
+
+.theme-switch:checked + .theme-label::before {
+  transform: translateX(28px);
+}
+
+.sun,
+.moon {
+  font-size: 12px;
+  position: absolute;
+}
+
+.sun {
+  left: 9px;
+}
+
+.moon {
+  right: 5px;
+}
+
+/* Stars Background */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.stars::before,
+.stars::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
+
+.stars::before {
+  top: 20%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.stars::after {
+  top: 60%;
+  right: 30%;
+  animation-delay: 1s;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Hero Container */
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Pixel Mascot */
+.mascot-container {
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.mascot:hover .mascot-image {
+  transform: scale(1.05);
+  filter: var(--mascot-hover-glow);
+}
+
+.mascot-image {
+  display: block;
+  width: 150px;
+  height: 250px;
+  object-fit: cover;
+
+  filter: var(--mascot-glow);
+  transition: transform .3s ease, filter .3s ease; 
+
+}
+
+
+
+.gentle-float {
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Typography */
+.pixel-title {
+  font-family: "Silkscreen", monospace;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.floating-title {
+  animation: titleFloat 5s ease-in-out infinite;
+}
+
+@keyframes titleFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.subtitle {
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  min-height: 2em;
+}
+
+/* Typing Effect */
+.typing-cursor::after {
+  content: "|";
+  animation: blink 1s infinite;
+  color: var(--accent-1);
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Enter Button */
+.enter-btn {
+  font-family: "Silkscreen", monospace;
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  background: transparent;
+  border: 3px solid var(--text-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.enter-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  box-shadow: 0 0 20px var(--text-primary);
+}
+
+.glitch-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.glitch-btn:hover::before {
+  left: 100%;
+}
+
+/* Navigation */
+.pixel-nav {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.5s ease;
+}
+
+.pixel-nav.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.nav-item:hover::before {
+  opacity: 0.1;
+}
+
+.nav-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.nav-text {
+  font-family: "Silkscreen", monospace;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-container {
+    padding: 10px;
+  }
+
+  .nav-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .nav-item {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+  }
+}

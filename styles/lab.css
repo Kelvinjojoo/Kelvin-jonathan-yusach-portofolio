@@ -1,0 +1,779 @@
+:root {
+  --bg-primary: #0a0a23;
+  --bg-secondary: #1a1a3a;
+  --text-primary: #00d4aa;
+  --text-secondary: #ffffff;
+  --accent-1: #ff6b6b;
+  --accent-2: #4ecdc4;
+  --accent-3: #45b7d1;
+  --accent-4: #f9ca24;
+  --accent-5: #6c5ce7;
+  --purple-dark: #2d1b69;
+  --purple-light: #9b59b6;
+  --pixel-size: 4px;
+}
+
+[data-theme="light"] {
+  --bg-primary: #e6e6fa;
+  --bg-secondary: #d8bfd8;
+  --text-primary: #4b0082;
+  --text-secondary: #2f1b69;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "VT323", monospace;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+  padding-top: 80px;
+}
+
+/* Mystical Cursor Trail */
+.cursor-trail {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 16px;
+  color: var(--accent-4);
+  text-shadow: 0 0 10px var(--accent-4);
+  animation: sparkle 1s ease-out forwards;
+  user-select: none;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(360deg);
+  }
+}
+
+
+
+@keyframes cursorGlow {
+  0% {
+    filter: drop-shadow(0 0 5px var(--accent-4));
+  }
+  100% {
+    filter: drop-shadow(0 0 15px var(--accent-4)) drop-shadow(0 0 25px var(--purple-light));
+  }
+}
+
+/* Update cursor position with JavaScript */
+body.cursor-move::after {
+  top: var(--cursor-y, 0);
+  left: var(--cursor-x, 0);
+}
+
+/* Fixed Navigation */
+.pixel-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple-light));
+  border-bottom: 2px solid var(--accent-4);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-back {
+  font-family: "Silkscreen", monospace;
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 2px solid white;
+  transition: all 0.3s ease;
+  border-radius: var(--pixel-size);
+  cursor: pointer;
+}
+
+.nav-back:hover {
+  background: white;
+  color: var(--purple-dark);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+  position: relative;
+  padding: 5px 10px;
+  border-radius: var(--pixel-size);
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  color: var(--accent-4);
+}
+
+.nav-links a.current {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--accent-4);
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-4);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a.current::after {
+  width: 0;
+}
+
+/* Theme Toggle in Nav */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch {
+  display: none;
+}
+
+.theme-label {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  border-radius: 25px;
+  padding: 5px;
+  cursor: pointer;
+  position: relative;
+  width: 60px;
+  height: 30px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.theme-label::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  transform: translateX(2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.theme-switch:checked + .theme-label::before {
+  transform: translateX(28px);
+}
+
+.sun,
+.moon {
+  font-size: 12px;
+  position: absolute;
+  z-index: 1;
+}
+
+.sun {
+  left: 9px;
+  top: 4.5px;
+}
+
+.moon {
+  right: 5px;
+}
+
+/* Stars Background */
+.stars-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.stars-bg::before,
+.stars-bg::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--accent-4);
+  border-radius: 50%;
+  animation: twinkle 3s infinite alternate;
+}
+
+.stars-bg::before {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.stars-bg::after {
+  top: 70%;
+  right: 20%;
+  animation-delay: 1.5s;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+/* Main Container */
+.tarot-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Header */
+.tarot-header {
+  margin-bottom: 60px;
+}
+
+.tarot-title {
+  font-family: "Silkscreen", monospace;
+  font-size: clamp(1rem, 6vw, 3.2rem);
+  color: var(--purple-light);
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px var(--purple-light);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px var(--purple-light);
+  }
+  to {
+    text-shadow: 0 0 30px var(--purple-light), 0 0 40px var(--purple-light);
+  }
+}
+
+.tarot-subtitle {
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Tarot Deck */
+.tarot-deck {
+  margin-bottom: 60px;
+}
+
+.deck-container {
+  position: relative;
+  width: 400px;
+  height: 250px;
+  margin: 0 auto 40px;
+  perspective: 1000px;
+}
+
+.card-back {
+  position: absolute;
+  width: 120px;
+  height: 180px;
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple-light));
+  border: 3px solid var(--accent-4);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.card-back::before {
+  content: "🔮";
+  animation: float 3s ease-in-out infinite;
+}
+
+.card-1 {
+  left: 0;
+  top: 15px;
+  transform: rotate(-15deg);
+  z-index: 1;
+}
+
+.card-2 {
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.card-3 {
+  right: 0;
+  top: 15px;
+  transform: rotate(15deg);
+  z-index: 2;
+}
+
+.card-back:hover {
+  transform: translateY(-20px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(156, 89, 182, 0.4);
+}
+
+.card-back.dimmed {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Draw Button */
+.draw-button {
+  font-family: "Silkscreen", monospace;
+  font-size: 1.4rem;
+  padding: 20px 40px;
+  background: linear-gradient(45deg, var(--accent-1), var(--accent-5));
+  border: none;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.draw-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.draw-button.dimmed {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.button-glow {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.draw-button:hover .button-glow {
+  left: 100%;
+}
+
+/* Card Reveal */
+.card-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+
+.card-reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.card-and-reading-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.revealed-card {
+  max-width: 300px;
+  margin: 0 auto 30px;
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple-light));
+  border: 3px solid var(--accent-4);
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+  animation: cardFlip 1.5s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 280px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, var(--purple-dark), var(--purple-light));
+  flex-shrink: 0;
+  transform-style: preserve-3d;
+  /* Enhanced rotation as requested */
+  transform: rotateY(0deg) scale(1);
+}
+
+@keyframes cardFlip {
+  0% {
+    transform: perspective(1000px) rotateY(-180deg) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: perspective(1000px) rotateY(-90deg) scale(0.9);
+    opacity: 0.5;
+  }
+  100% {
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.card-header {
+  text-align: center;
+  border-bottom: 2px solid var(--accent-4);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.card-name {
+  font-family: "Silkscreen", monospace;
+  font-size: 1.2rem;
+  color: var(--accent-4);
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px var(--accent-4);
+}
+
+.card-image {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-message {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.card-wisdom {
+  font-size: 0.9rem;
+  color: var(--accent-2);
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-2);
+  text-align: left;
+}
+
+/* Reading Section */
+.reading-section {
+  max-width: 350px;
+  flex-shrink: 0;
+  margin: 0;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent-2);
+  border-radius: var(--pixel-size);
+  padding: 25px;
+}
+
+.reading-title {
+  font-family: "Silkscreen", monospace;
+  font-size: 1.5rem;
+  color: var(--accent-2);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.reading-content p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.reading-content strong {
+  color: var(--accent-4);
+}
+
+/* Draw Again Button */
+.draw-again-button {
+  font-family: "VT323", monospace;
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  background: var(--accent-3);
+  border: 2px solid var(--accent-3);
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.draw-again-button:hover {
+  background: transparent;
+  color: var(--accent-3);
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .deck-container {
+    width: 300px;
+    height: 200px;
+  }
+
+  .card-back {
+    width: 80px;
+    height: 120px;
+    font-size: 1.5rem;
+  }
+
+  .revealed-card {
+    padding: 20px;
+    width: 250px;
+    height: 350px;
+  }
+
+  .card-name {
+    font-size: 1.1rem;
+  }
+
+  .card-image {
+    font-size: 2.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .card-and-reading-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tarot-container {
+    padding: 20px 10px;
+  }
+
+  .draw-button {
+    padding: 15px 25px;
+    font-size: 1.2rem;
+  }
+
+  .card-message {
+    font-size: 1.1rem;
+  }
+}
+
+/* Additional Stars */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--accent-4);
+  border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
+
+/* Floating Background Elements */
+.floating-bg-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-element {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.3;
+  animation: mysticalFloat 10s ease-in-out infinite;
+}
+
+.floating-element.crystal {
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-element.moon {
+  top: 20%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.floating-element.star {
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+.floating-element.magic {
+  top: 60%;
+  right: 25%;
+  animation-delay: 6s;
+}
+
+.floating-element.eye {
+  bottom: 20%;
+  right: 10%;
+  animation-delay: 8s;
+}
+
+@keyframes mysticalFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(30px, -40px) rotate(90deg) scale(1.1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-20px, -60px) rotate(180deg) scale(0.9);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate(-40px, 30px) rotate(270deg) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+.tarot-explanation {
+  background: var(--bg-secondary);
+  border: 2px solid var(--purple-light);
+  border-radius: var(--pixel-size);
+  padding: 30px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.explanation-title {
+  font-family: "Silkscreen", monospace;
+  font-size: 1.8rem;
+  color: var(--accent-4);
+  margin-bottom: 20px;
+}
+
+.explanation-text {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.explanation-text p {
+  margin-bottom: 15px;
+}
+
+/* Restore cursor for interactive elements */
+.draw-button,
+.draw-again-button,
+.nav-back,
+.nav-links a,
+.theme-label,
+.card-back {
+  cursor: pointer !important;
+}
+
+
+.music-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+}
+
+#musicToggle {
+  background: var(--accent-3);
+  border: none;
+  padding: 10px 15px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+}
+
+#musicToggle:hover {
+  background: var(--accent-2);
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Data Scientist | Home</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323:wght@400&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch" class="theme-switch">
+        <label for="theme-switch" class="theme-label">
+            <span class="sun">☀️</span>
+            <span class="moon">🌙</span>
+        </label>
+    </div>
+
+    <div class="stars"></div>
+    
+    <main class="hero-container">
+        <div class="mascot-container">
+            <div class="mascot gentle-float">
+                <img src="images/Mascot 1.png" alt="Data Scientist Mascot" class="mascot-image" id="mascotImage">
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="pixel-title floating-title">Kelvin's Datafolio</h1>
+            <h2 class="subtitle" id="typingSubtitle"></h2>
+            
+            <button class="enter-btn glitch-btn nav-item2" onclick="showNavigation()">
+                <span>ENTER MY WORLD</span>
+            </button>
+        </div>
+
+        <nav class="pixel-nav hidden" id="navigation">
+            <div class="nav-grid">
+                <a href="about.html" class="nav-item" data-color="#1ed0ff">
+                    <span class="nav-icon">🪪</span>
+                    <span class="nav-text">About Me</span>
+                </a>
+                <a href="portfolio.html" class="nav-item" data-color="#f9ca24">
+                    <span class="nav-icon">🗂️</span>
+                    <span class="nav-text">Portfolio</span>
+                </a>
+                <a href="lab.html" class="nav-item" data-color="#9d68ff">
+                    <span class="nav-icon">🔮</span>
+                    <span class="nav-text">DS Tarot</span>
+                </a>
+                <a href="photography.html" class="nav-item" data-color="#7c7c7c">
+                    <span class="nav-icon">📷</span>
+                    <span class="nav-text">Photography</span>
+                </a>
+                <a href="contact.html" class="nav-item" data-color="#ff2d9e">
+                    <span class="nav-icon">📞</span>
+                    <span class="nav-text">Contact</span>
+                </a>
+            </div>
+        </nav>
+    </main>
+
+    <script src="scripts/index.js"></script>
+</body>
+</html>
